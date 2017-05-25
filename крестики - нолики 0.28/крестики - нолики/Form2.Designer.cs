@@ -70,7 +70,7 @@
             this.Controls.Add(this.ОТПРАВИТЬ);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label2);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(300, 299);
             this.Name = "Form2";
             this.Text = "Form2";

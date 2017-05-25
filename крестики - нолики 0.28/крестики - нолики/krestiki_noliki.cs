@@ -22,8 +22,8 @@ namespace крестики___нолики
         public krestiki_noliki(string data, ref PictureBox [,] picbox, out int raz)
         {
             this.data = data;
-            Razmer(ref picbox);
-            Sozdpol(ref picbox);
+            Razmer_poly(ref picbox);
+            Sozdanie_poly(ref picbox);
             raz = razmer;
                        
         }
@@ -35,12 +35,17 @@ namespace крестики___нолики
             switch (data)
             {                  
                 case "igrok + igrok":
-                    
-                    click_i_i(ref picbox, ref text, sender);
+
+                    //igrok_igrok(ref picbox, ref text, sender);
+                    serv(ref picbox, ref text, sender);
+                    break;
+                case "igrok + Computer":
+                    igrok_Computer(ref picbox, ref text, sender);
+                    //igrok_igrok(ref picbox, ref text, sender);
                     break;
                 
                 case "igrok + igroc 20":
-                    click_i_i(ref picbox, ref text, sender);
+                    igrok_igrok(ref picbox, ref text, sender);
                     break;
                 case "Локальная сеть":
                     //click_i_i(ref picbox, ref text, sender);
@@ -51,9 +56,14 @@ namespace крестики___нолики
                     break;
             }
         }
-
-        public void serv(ref PictureBox[,] picbox, string s, ref string text)
+        //protected void igrok_Computer(ref PictureBox[,] picbox, ref string text, object sender)
+        public void serv(ref PictureBox[,] picbox, ref string text,object sender)
         {
+            string s=null;
+            for (int k = 0; k < picbox.GetLength(0); k++)
+                for (int o = 0; o < picbox.GetLength(1); o++)
+                    if (picbox[k, o] == (PictureBox)sender)
+                    { s = "Игрок=1:" + "x=" + k + ":" + "y=" + o; }
             string[] s1 = s.Split(':');
             int x = -1, y = -1;
             string r;
@@ -66,13 +76,16 @@ namespace крестики___нолики
                     {
                         r = s[j + 2].ToString();
                         x = Convert.ToInt32(r);
+                        break;
                     }
                     if (s[j] == 'y')
                     {
                         r = s[j + 2].ToString();
                         y = Convert.ToInt32(r);
+                        j=j+2;
+                        goto unter;
                     }
-
+                unter:
                     if (x != -1 & y != -1)
                     {
                         if (xod)
@@ -85,7 +98,7 @@ namespace крестики___нолики
                                 xod = false;
                                 text = "ход 0";
                                 //Proverkakrest(ref text, ref picbox);
-                                Proverka(ref text, ref picbox, 'x', x, y);
+                                Proverka_pobed(ref text, ref picbox, 'x', x, y);
                                 kolxodov++;
                             }
                         }
@@ -99,7 +112,7 @@ namespace крестики___нолики
                                 xod = true;
                                 text = "ход x";
                                 //Proverkanolic(ref text, ref picbox);
-                                Proverka(ref text, ref picbox, '0', x, y);
+                                Proverka_pobed(ref text, ref picbox, '0', x, y);
                                 kolxodov++;
                             }
                         }
@@ -107,12 +120,12 @@ namespace крестики___нолики
                 }
             }
         }
-        public void click_i_i(ref PictureBox[,] picbox, ref string text, object sender)   //подходит для любого поля (игрок с игроком)    (нужно проверить)
+        protected void igrok_Computer(ref PictureBox[,] picbox, ref string text, object sender)   //подходит для любого поля (игрок с игроком)    (нужно проверить)
         {
             for (int i = 0; i < picbox.GetLength(0); i++)
                 for (int j = 0; j < picbox.GetLength(1); j++)
                     if (picbox[i, j] == (PictureBox)sender)
-                    { 
+                    {
                         if (xod)
                         {
                             if (picbox[i, j].Image != null) text = "Клетка занята (ход x)";
@@ -123,7 +136,120 @@ namespace крестики___нолики
                                 xod = false;
                                 text = "ход 0";
                                 //Proverkakrest(ref text, ref picbox);
-                                Proverka(ref text, ref picbox, 'x', i, j);
+                                Proverka_pobed(ref text, ref picbox, 'x', i, j);
+                                kolxodov++;
+                            }
+                        }
+                        if (xod==false)
+                        {
+                            if (kolxodov == 1)
+                            {
+                                if ((i == 0||i==2)&&(j == 0||j==2))
+                                {
+                                    picbox[1, 1].Image = Image.FromFile(@"0.jpg");
+                                    pole[1,  1] = '0';
+                                    xod = true;
+                                    text = "ход x";
+                                    kolxodov++;
+                                    break;
+                                }
+                             }
+                            if (kolxodov == 3)
+                            {
+
+                                if ((i == 0 || i == 2) && j == 0)
+                                {
+                                    picbox[i, j+1].Image = Image.FromFile(@"0.jpg");
+                                    pole[i,j+1] = '0';
+                                    xod = true;
+                                    text = "ход x";
+                                    kolxodov++;
+                                    break;
+                                }
+                                if ((i == 0 || i == 2) && j == 2)
+                                {
+
+                                    picbox[i, j - 1].Image = Image.FromFile(@"0.jpg");
+                                    pole[i, j - 1] = '0';
+                                    xod = true;
+                                    text = "ход x";
+                                    kolxodov++;
+                                    break;
+                                }
+
+                            }
+                            if (kolxodov == 5)
+                            {
+                                if ((i == 0 || i == 2) && j == 0)
+                                {
+                                    picbox[i, j + 1].Image = Image.FromFile(@"0.jpg");
+                                    pole[i, j + 1] = '0';
+                                    xod = true;
+                                    text = "ход x";
+                                    kolxodov++;
+                                    break;
+                                }
+                                if ((i == 0 || i == 2) && j == 2)
+                                {
+
+                                    picbox[i, j - 1].Image = Image.FromFile(@"0.jpg");
+                                    pole[i, j - 1] = '0';
+                                    xod = true;
+                                    text = "ход x";
+                                    kolxodov++;
+                                    break;
+                                }
+                               
+
+                            }
+                            
+                            picbox[i-1, j-1].Image = Image.FromFile(@"0.jpg");
+                            pole[i-1, j-1] = '0';
+                            xod = true;
+                            text = "ход x";
+                        }
+                        //else
+                        //{
+                        //    if (picbox[i, j].Image != null) text = "Клетка занята (ход 0)";
+                        //    else
+                        //    {
+                        //        picbox[i, j].Image = Image.FromFile(@"0.jpg");
+                        //        pole[i, j] = '0';
+                        //        xod = true;
+                        //        text = "ход x";
+                        //        //Proverkanolic(ref text, ref picbox);
+                        //        Proverka_pobed(ref text, ref picbox, '0', i, j);
+                        //        kolxodov++;
+                        //    }
+                        //}
+                        goto link1;
+                    }
+        link1:
+            if (kolxodov == pole.Length && text[0] == 'х')
+            {
+                text = "ничья";
+                Blokirovka(ref picbox);
+            }
+        }
+        protected void igrok_igrok(ref PictureBox[,] picbox, ref string text, object sender)   //подходит для любого поля (игрок с игроком)    (нужно проверить)
+        {
+            //(sender as PictureBox).Image=Image.FromFile(@"x.jpg");
+            
+            for (int i = 0; i < picbox.GetLength(0); i++)
+                for (int j = 0; j < picbox.GetLength(1); j++)
+                    if (picbox[i, j] == (PictureBox)sender)
+                    {
+                        if (xod)
+                        {
+                            if (picbox[i, j].Image != null) text = "Клетка занята (ход x)";
+                            else
+                            {
+                                picbox[i, j].Image = Image.FromFile(@"x.jpg");
+                                pole[i, j] = 'x';
+                                xod = false;
+                                text = "ход 0";
+                                //Proverkakrest(ref text, ref picbox);
+                                Proverka_pobed(ref text, ref picbox, 'x', i, j);
                                 kolxodov++;
                             }
                         }
@@ -137,13 +263,13 @@ namespace крестики___нолики
                                 xod = true;
                                 text = "ход x";
                                 //Proverkanolic(ref text, ref picbox);
-                                Proverka(ref text, ref picbox, '0', i, j);
+                                Proverka_pobed(ref text, ref picbox, '0', i, j);
                                 kolxodov++;
                             }
                         }
                         goto link1;
                     }
-            link1:
+        link1:
             if (kolxodov == pole.Length && text[0] == 'х')
             {
                 text = "ничья";
@@ -151,7 +277,7 @@ namespace крестики___нолики
             }
         }
 
-        public void Blokirovka(ref PictureBox[,] picbox)
+       protected void Blokirovka(ref PictureBox[,] picbox)
         {
             //игра закончилась (блокируем поле) (в отдельный метод)           
             for (int i = 0; i < picbox.GetLength(0); i++)
@@ -163,7 +289,7 @@ namespace крестики___нолики
         }
 
         //проверка победы
-        public void Proverka(ref string text, ref PictureBox[,] picbox, char sim, int lew, int praw)  //текст в label, массив (для блокировки), символ проверки(что поставили), 2 индекса (координаты)
+        protected void Proverka_pobed(ref string text, ref PictureBox[,] picbox, char sim, int lew, int praw)  //текст в label, массив (для блокировки), символ проверки(что поставили), 2 индекса (координаты)
         {
             
             bool prowerka = false;  //победили?
@@ -337,7 +463,7 @@ namespace крестики___нолики
 
 
         
-        public void Razmer(ref PictureBox[,] picbox)  // + к созданию поля
+        protected void Razmer_poly(ref PictureBox[,] picbox)  // + к созданию поля
         {
             //int razmer = 0; //размер игрового поля
             switch (data)
@@ -345,6 +471,11 @@ namespace крестики___нолики
                 case "igrok + igrok":
                     razmer = 3;
                     pobeda = 3;
+                    break;
+                case "igrok + Computer":
+                    razmer = 3;
+                    pobeda = 3;
+                    
                     break;
 
                 case "igrok + igroc 20":
@@ -366,7 +497,7 @@ namespace крестики___нолики
         }
 
 
-        private void Sozdpol(ref PictureBox[,] picbox)  //создание поля   (pole[i,j] (i - номер столбца(lew), j - номер строки(praw))
+        private void Sozdanie_poly(ref PictureBox[,] picbox)  //создание поля   (pole[i,j] (i - номер столбца(lew), j - номер строки(praw))
         {
             //создание игрового поля                   
             int d = 10, v = 10;

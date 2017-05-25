@@ -119,7 +119,7 @@ namespace крестики___нолики
         private void ОТПРАВИТЬ_Click(object sender, EventArgs e)
         {
             string s = textBox1.Text; string text = "";
-            kr.serv(ref picbox, s, ref text);
+            //kr.serv(ref picbox, s, ref text);
             label2.Text = text;
 
         }

@@ -33,7 +33,7 @@ namespace крестики___нолики
         private void button2_Click(object sender, EventArgs e)
         {
             Form1 main = this.Owner as Form1;
-            main.data = "igrok + ii";
+            main.data = "igrok + Computer";
             label2.Text = "игрок с компьютером (3 х 3)";
              //Form2 v = new Form2("igrok + ii");
             //v.ShowDialog();
@@ -56,11 +56,11 @@ namespace крестики___нолики
                 case "igrok + igrok":
                     label2.Text = "игрок с игроком (3 х 3)";
                     break;
-                case "igrok + ii":
+                case "igrok + Computer":
                     label2.Text = "игрок с компьютером (3 х 3)";
                     break;
-                case "ii + igrok":
-                    label2.Text = "компьютер с игроком (3 х 3)";
+                case "Локальная сеть":
+                    label2.Text = "Локальная сеть";
                     break;
                 case "igrok + igroc 20":
                     label2.Text = "игрок с игроком (20 х 20)";
