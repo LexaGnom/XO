@@ -12,9 +12,9 @@ namespace крестики___нолики
     public class krestiki_noliki
     {
         
-        string data;
+         string data;
         bool xod = true; // true - крестики, false - нолики
-        int kolxodov = 0; //количество ходов
+         int kolxodov = 0; //количество ходов
         char[,] pole; // = new char[3, 3];  //игровое поле
         int razmer = 0; //размер игрового поля
         int pobeda;  //количество клеток в линии (для победы)
@@ -37,7 +37,8 @@ namespace крестики___нолики
                 case "igrok + igrok":
 
                     //igrok_igrok(ref picbox, ref text, sender);
-                    serv(ref picbox, ref text, sender);
+                    //lokal r=new lokal();
+                   serv(ref picbox, ref text, sender);
                     break;
                 case "igrok + Computer":
                     igrok_Computer(ref picbox, ref text, sender);
@@ -57,9 +58,9 @@ namespace крестики___нолики
             }
         }
         //protected void igrok_Computer(ref PictureBox[,] picbox, ref string text, object sender)
-        public void serv(ref PictureBox[,] picbox, ref string text,object sender)
+        public void serv(ref PictureBox[,] picbox, ref string text, object sender)
         {
-            string s=null;
+            string s = null;
             for (int k = 0; k < picbox.GetLength(0); k++)
                 for (int o = 0; o < picbox.GetLength(1); o++)
                     if (picbox[k, o] == (PictureBox)sender)
@@ -82,7 +83,7 @@ namespace крестики___нолики
                     {
                         r = s[j + 2].ToString();
                         y = Convert.ToInt32(r);
-                        j=j+2;
+                        j = j + 2;
                         goto unter;
                     }
                 unter:
@@ -277,7 +278,8 @@ namespace крестики___нолики
             }
         }
 
-       protected void Blokirovka(ref PictureBox[,] picbox)
+       
+        protected void Blokirovka(ref PictureBox[,] picbox)
         {
             //игра закончилась (блокируем поле) (в отдельный метод)           
             for (int i = 0; i < picbox.GetLength(0); i++)
@@ -450,6 +452,7 @@ namespace крестики___нолики
                     if (prowerka)   //победа
                     {
                         text = "победили" + " " + sim.ToString();
+                        //Blokirovka();
                         Blokirovka(ref picbox);
                         break;
                     }
