@@ -9,23 +9,23 @@ using System.Windows.Forms;
 
 namespace крестики___нолики
 {
-    public partial class Form1 : Form
+    public partial class Menu : Form
     {
         public string data = "igrok + igrok";
-        public Form1()
+        public Menu()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form2 v = new Form2(data);            
-            v.ShowDialog(); 
+            GamePole v = new GamePole(data);            
+            v.Show(); 
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form3 v = new Form3();
+            RejimIgr v = new RejimIgr();
             v.Owner = this;
             v.ShowDialog();
         }

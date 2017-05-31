@@ -1,6 +1,6 @@
 ﻿namespace крестики___нолики
 {
-    partial class Form3
+    partial class RejimIgr
     {
         /// <summary>
         /// Required designer variable.
@@ -119,7 +119,7 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // Form3
+            // RejimIgr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -132,8 +132,8 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "Form3";
-            this.Text = "Form3";
+            this.Name = "RejimIgr";
+            this.Text = "Режим Игры";
             this.Load += new System.EventHandler(this.Form3_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

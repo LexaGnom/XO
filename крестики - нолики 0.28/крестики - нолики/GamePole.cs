@@ -6,48 +6,33 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace крестики___нолики
 {
-    public partial class Form2 : Form
+    public partial class GamePole : Form
     {
         PictureBox[,] picbox; // = new PictureBox[3, 3];
-        //public bool xod = true; // true - крестики, false - нолики
         string data = "";  // режим игры
         krestiki_noliki kr;
+        int count = 0;
         int razmer;
         public Label label1;
        
-        //public char[,] pole = new char[3, 3];  //игровое поле
-        //public int kolxodov = 0; //количество ходов
-
-        //кнопка начать сначала
-        //счетчик побед
-      
-        //bool perexod = true; //переход от компьютера к человеку     (одно нажатие) ( игрок - занято?(while да - ходи снова) - проверка - компьютер - проверка)(до победы)
-      
-        public Form2(string data)
+            
+        public GamePole(string data)
         {
             
             this.data = data;            //определяет режим игры
-           // int razmer;
+           
             kr = new krestiki_noliki(data, ref picbox, out razmer); //определяет режим игры  
             this.Height = (razmer + 2) * 45;
             this.Width = (razmer + 2) * 45;
             
             InitializeComponent();
+            
         }
-
-
-
-        //при увеличении размера окна размер игрового поля не меняется 
-
-        //ничья?
-
-        //сначала столбец, потом строка (??? (вроде наооборот?)) (проверка)
         
-        //в классе - private методы
-
        
         
         public void provfile()     //проверка не работает тут
@@ -116,12 +101,68 @@ namespace крестики___нолики
 
         }
 
-        private void ОТПРАВИТЬ_Click(object sender, EventArgs e)
+       
+        private void Buld_area(string area)
         {
-            string s = textBox1.Text; string text = "";
-            //kr.serv(ref picbox, s, ref text);
-            label2.Text = text;
+            
+            
+            if (area == ""||area==null)
+                return ;
+            string[] mas = area.Split('-');
+            
+            for (int k = 0; k < picbox.GetLength(0); k++)
+                for (int o = 0; o < picbox.GetLength(1); o++)
+                {
 
+                    switch (mas[o][k])
+                    {
+                        case '1':
+                            picbox[k, o].Image = Image.FromFile(@"x.jpg");
+                            count++;
+                            break;
+                        case '2':
+                            picbox[k, o].Image = Image.FromFile(@"0.jpg");
+                            count++;
+                            break;
+                        default:
+                            picbox[k, o].Image = null; 
+                            break;
+                    }
+                        
+                }
+        }
+        
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (kr.Igrok.isConnected())
+            {
+
+                kr.Igrok.Update();
+                kr.Igrok.Process();
+                Buld_area(kr.Igrok.area);
+                
+
+                if (kr.Igrok.winner != '\0')
+                {
+                    label2.Text = "Победил " + kr.Igrok.winner;
+                    this.Text = "Победил " + kr.Igrok.winner;
+                }
+                else
+                {
+                    label2.Text = "Ход" + kr.Igrok.nextPlayer;
+
+                }
+                if (kr.Igrok.winner=='n')
+                {
+                    label2.Text = "Ничья";
+                    this.Text = "Ничья";
+                }
+                
+                
+                
+                
+                
+            }
         }
     }
 }
