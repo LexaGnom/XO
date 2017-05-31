@@ -44,8 +44,8 @@ namespace ClassLibrary
         public Game()
         {
             pole = new char[3, 3];
-            FirstPlayerName = '1';
-            SecondPlayerName = '2';
+            FirstPlayerName = 'X';
+            SecondPlayerName = 'O';
             nextPlayer = FirstPlayerName;
         }
         /// <summary>
